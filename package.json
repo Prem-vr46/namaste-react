@@ -1,0 +1,31 @@
+{
+  "name": "namaste-react",
+  "version": "1.0.0",
+  "description": "This is Namaste React by Prem",
+  "scripts": {
+    "start": "parcel react.html",
+    "build": "parcel build react.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prem-vr46/namaste-react.git"
+  },
+  "keywords": [],
+  "author": "Pon Prem Kumar P K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Prem-vr46/namaste-react/issues"
+  },
+  "homepage": "https://github.com/Prem-vr46/namaste-react#readme",
+  "devDependencies": {
+    "parcel": "^2.16.1"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ]
+}
