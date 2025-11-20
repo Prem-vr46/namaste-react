@@ -3,6 +3,9 @@ import RestaurantCard from "./RestaurantCard";
 import resList from "../utils/mockData";
 import { SWIGGY_API } from "../utils/constant";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router";
+import usePremHook from "../utils/usePremHook";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   console.log("render");
@@ -14,6 +17,18 @@ const Body = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // const premDetails = usePremHook();
+  // if (premDetails !== null) {
+  //   setListOfRestaurants(
+  //     premDetails?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+  //       ?.restaurants
+  //   );
+  //   setFilteredRestaurant(
+  //     premDetails?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+  //       ?.restaurants
+  //   );
+  // }
 
   const fetchData = async () => {
     const value = await fetch(SWIGGY_API);
@@ -28,6 +43,10 @@ const Body = () => {
     );
   };
 
+  const onlineData = useOnlineStatus();
+  if (onlineData === false) {
+    return <h1>You are offline !</h1>;
+  }
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
@@ -68,7 +87,9 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredRestaurant.map((el) => (
-          <RestaurantCard key={el.info.id} resData={el} />
+          <Link to={"/restaurants/" + el.info.id} key={el.info.id}>
+            <RestaurantCard resData={el} />
+          </Link>
         ))}
       </div>
     </div>
