@@ -1,10 +1,12 @@
 import { CDN_URL } from "../utils/constant";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserContext from "../utils/UserContext";
 
 const RestaurantCard = (props) => {
   const { resData } = props;
   const { cloudinaryImageId, name, cuisines, avgRating, costForTwo, sla } =
     resData?.info;
+  const { loggedInUser } = useContext(UserContext);
 
   const styleCard = {
     backgroundColor: "#f0f0f0",
@@ -21,8 +23,21 @@ const RestaurantCard = (props) => {
       <h4>{avgRating} stars</h4>
       <h4>{costForTwo}</h4>
       <h4>{sla?.deliveryTime}</h4>
+      <h4>{loggedInUser}</h4>
     </div>
   );
 };
 
+export const withPromotionalFun = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute bg-black text-white m-2 p-2 rounded-lg">
+          Veg
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
+};
 export default RestaurantCard;

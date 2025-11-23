@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import { useEffect, useState, useContext } from "react";
+import RestaurantCard, { withPromotionalFun } from "./RestaurantCard";
 import resList from "../utils/mockData";
 import { SWIGGY_API } from "../utils/constant";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router";
 import usePremHook from "../utils/usePremHook";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   console.log("render");
@@ -30,9 +31,11 @@ const Body = () => {
   //   );
   // }
 
+  const VegRestaurant = withPromotionalFun(RestaurantCard);
   const fetchData = async () => {
     const value = await fetch(SWIGGY_API);
     const resultJson = await value.json();
+    console.log(resultJson);
     setListOfRestaurants(
       resultJson?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
@@ -42,6 +45,8 @@ const Body = () => {
         ?.restaurants
     );
   };
+
+  const { setUserName, loggedInUser } = useContext(UserContext);
 
   const onlineData = useOnlineStatus();
   if (onlineData === false) {
@@ -87,11 +92,23 @@ const Body = () => {
             Top rated Restaurants
           </button>
         </div>
+        <div className="m-4 p-4">
+          <label>User name:</label>
+          <input
+            className="border border-black"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
       </div>
       <div className="res-container flex flex-wrap">
         {filteredRestaurant.map((el) => (
           <Link to={"/restaurants/" + el.info.id} key={el.info.id}>
-            <RestaurantCard resData={el} />
+            {el.info.veg ? (
+              <VegRestaurant resData={el} />
+            ) : (
+              <RestaurantCard resData={el} />
+            )}
           </Link>
         ))}
       </div>
