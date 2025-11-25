@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { SWIGGY_RESTAURANT_API } from "../utils/constant";
 import { useParams } from "react-router";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const RestaurantMenuPage = () => {
   // useEffect(() => {
@@ -17,6 +19,10 @@ const RestaurantMenuPage = () => {
   //   }
   // };
   const { resId } = useParams();
+  const dispatch = useDispatch();
+  const handleAddItem = (item) => {
+    dispatch(addItem(item));
+  };
 
   return (
     <div className="menu-section">
@@ -26,6 +32,24 @@ const RestaurantMenuPage = () => {
         <li>Briyani</li>
         <li>Coke</li>
       </ul>
+      <div className="border border-black">
+        <h2>chicken briyani</h2>
+        <button
+          className="border border-black p-3"
+          onClick={() => handleAddItem("chicken briyani")}
+        >
+          Add
+        </button>
+      </div>
+      <div className="border border-black">
+        <h2>Grill chicken</h2>
+        <button
+          className="border border-black p-3"
+          onClick={() => handleAddItem("Grill chicken")}
+        >
+          Add
+        </button>
+      </div>
     </div>
   );
 };
