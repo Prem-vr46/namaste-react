@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
-  console.log("header render");
+  //console.log("header render");
 
   const onlineData = useOnlineStatus();
 
   useEffect(() => {
-    console.log("useeffect called");
+    //console.log("useeffect called");
   }, [btnName]);
 
   // subscribing to the store using a selector
@@ -38,6 +38,9 @@ const Header = () => {
           </li>
           <li className="px-4">
             <Link to="/grocery">Grocery</Link>
+          </li>
+          <li className="px-4">
+            <Link to="/premtest">PremTest</Link>
           </li>
           <li className="px-4">
             <Link to="/cart">Cart ({cartItems.length} items)</Link>

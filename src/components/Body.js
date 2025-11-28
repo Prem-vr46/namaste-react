@@ -9,7 +9,7 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
 
 const Body = () => {
-  console.log("render");
+  //console.log("render");
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
 
@@ -35,7 +35,7 @@ const Body = () => {
   const fetchData = async () => {
     const value = await fetch(SWIGGY_API);
     const resultJson = await value.json();
-    console.log(resultJson);
+    //console.log(resultJson);
     setListOfRestaurants(
       resultJson?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
@@ -60,6 +60,7 @@ const Body = () => {
         <div className="m-4 p-4">
           <input
             type="text"
+            data-testid="searchInput"
             className="border border-solid border-black"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
@@ -67,6 +68,7 @@ const Body = () => {
           <button
             className=" px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
+              console.log(listOfRestaurants, "res list");
               const filteredValue = listOfRestaurants.filter((res) => {
                 return res.info.name
                   .toLowerCase()
@@ -83,10 +85,12 @@ const Body = () => {
           <button
             className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
-              const filteredList = listOfRestaurants.filter(
-                (res) => res?.info?.avgRating > 4.3
-              );
-              setListOfRestaurants(filteredList);
+              const filteredList = listOfRestaurants.filter((res) => {
+                return res?.info?.avgRating >= 4.3;
+              });
+              console.log(filteredList);
+              //setListOfRestaurants(filteredList);
+              setFilteredRestaurant(filteredList);
             }}
           >
             Top rated Restaurants
@@ -105,9 +109,9 @@ const Body = () => {
         {filteredRestaurant.map((el) => (
           <Link to={"/restaurants/" + el.info.id} key={el.info.id}>
             {el.info.veg ? (
-              <VegRestaurant resData={el} />
+              <VegRestaurant resData={el.info} />
             ) : (
-              <RestaurantCard resData={el} />
+              <RestaurantCard resData={el.info} />
             )}
           </Link>
         ))}

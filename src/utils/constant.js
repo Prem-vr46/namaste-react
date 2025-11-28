@@ -7,3 +7,5 @@ export const SWIGGY_API =
 
 // export const SWIGGY_RESTAURANT_API =
 //   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9715987&lng=77.5945627&restaurantId=497930";
+
+export const TCS_API = "https://jsonplaceholder.typicode.com/todos";
